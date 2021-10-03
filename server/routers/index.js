@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 
 // Shift
 router.get('/shift', shiftController.getAll)
+router.get('/shift/filter/:start/:end', shiftController.getFiltered)
 router.post('/shift', shiftController.create)
 router.put('/shift/:id', shiftController.update)
 router.delete('/shift/:id', shiftController.delete)

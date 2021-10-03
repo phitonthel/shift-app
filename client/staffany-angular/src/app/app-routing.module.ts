@@ -8,7 +8,7 @@ import { AboutComponent } from './about/about.component'
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component'
 
 const routes: Routes = [
-  { path: '', redirectTo: '/vrift', pathMatch: 'full' },
+  { path: '', redirectTo: '/shift', pathMatch: 'full' },
   { path: 'shift', component: ShiftComponent },
   { path: 'about', component: AboutComponent },
   { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404

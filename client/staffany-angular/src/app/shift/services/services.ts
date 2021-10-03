@@ -20,6 +20,22 @@ export class Services {
     }
   }
 
+  static async getShiftPerWeek(start: string, end: string) {
+    try {
+      const resAxios: any = await axios.get(`${this.baseUrl}/shift/filter/${start}/${end}`)
+
+      // convert to date
+      resAxios.data.forEach((shift: any) => {
+        shift.dateShift = new Date(shift.dateShift)
+      });
+
+      // append
+      return resAxios.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   static async createShift(payload: any) {
     try {
       const resAxios: any = await axios({

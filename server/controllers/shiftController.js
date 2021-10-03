@@ -1,10 +1,28 @@
 const { Shift } = require('../models/index')
+const { Op } = require('sequelize');
 
 class Controller {
 
   static async getAll(req, res, next) {
     try {
       const data = await Shift.findAll({
+        order: [
+          ['startTimestamp', 'ASC']
+        ]
+      })
+      res.status(200).json(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async getFiltered(req, res, next) {
+    try {
+      const startDate = new Date(req.params.start)
+      const endDate = new Date(req.params.end)
+
+      const data = await Shift.findAll({
+        where: { dateShift: { [Op.between]: [startDate, endDate] } },
         order: [
           ['startTimestamp', 'ASC']
         ]
@@ -113,8 +131,8 @@ class Controller {
       const action = req.params.action
       const command = (action == 'publish') ? true : false
 
-      await Shift.update({isPublished: command},
-        {where: {}}
+      await Shift.update({ isPublished: command },
+        { where: {} }
       )
       res.status(200).json({ message: 'OK' })
     } catch (error) {
@@ -127,7 +145,7 @@ class Controller {
       const id = +req.params.id
 
       // publish
-      await Shift.update({isPublished: true},
+      await Shift.update({ isPublished: true },
         { where: { id: id } }
       )
       res.status(200).json({ message: 'OK' })
@@ -141,7 +159,7 @@ class Controller {
       const id = +req.params.id
 
       // unpublish
-      await Shift.update({isPublished: false},
+      await Shift.update({ isPublished: false },
         { where: { id: id } }
       )
       res.status(200).json({ message: 'OK' })

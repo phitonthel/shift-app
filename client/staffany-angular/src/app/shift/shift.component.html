@@ -4,14 +4,21 @@
   <!-- Day  -->
   <div class="row">
     <div class="col-8">
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(0)">All</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(1)">Monday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(2)">Tuesday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(3)">Wednesday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(4)">Thursday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(5)">Friday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(6)">Saturday</button>
-      <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(7)">Sunday</button>
+      <div>
+        <input [(ngModel)]="weekInput" 
+          type="week" id="week" name="week">
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByWeekButton()">Filter by Week</button>
+      </div>
+      <div>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(0)">All</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(1)">Monday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(2)">Tuesday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(3)">Wednesday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(4)">Thursday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(5)">Friday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(6)">Saturday</button>
+        <button type="button" class="btn btn-info btn-sm m-2" (click)="filterByDay(7)">Sunday</button>
+      </div>
     </div>
     <div class="col-4">
       <div>

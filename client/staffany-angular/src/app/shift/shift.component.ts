@@ -14,7 +14,7 @@ export class ShiftComponent implements OnInit {
   currentView: string = 'shift-cards'
   currentAction: string = ''
 
-  date: Date = new Date()
+  weekInput = '2021-W40'
 
   formData: any = {
     id: '',
@@ -50,19 +50,36 @@ export class ShiftComponent implements OnInit {
 
   async filterByDay(day: number) {
     // get from database
-    const dates = await Services.getShift()
+    const shifts = await this.filterByWeek()
 
     // filter if user select day
     if (day) {
       this.shifts = []
-      dates.forEach((date: any) => {
-        if (date.dateShift.getDay() == day) {
-          this.shifts.push(date)
+      shifts.forEach((shift: any) => {
+        if (shift.dateShift.getDay() == day) {
+          this.shifts.push(shift)
         }
       });
     } else {
-      this.shifts = dates
+      this.shifts = shifts
     }
+  }
+
+  async filterByWeekButton() {
+    this.shifts = await this.filterByWeek()
+  }
+
+  async filterByWeek() {
+    const year = +this.weekInput.split('-')[0]
+    const week = +this.weekInput.split('-')[1].slice(1, 3)
+
+    let date = new Date(year, 0, week * 7)
+
+    const firstday = new Date(date.setDate(date.getDate() - date.getDay()))
+    const lastday = new Date(date.setDate(date.getDate() - date.getDay() + 6))
+
+    const shifts = await Services.getShiftPerWeek(firstday.toISOString(), lastday.toISOString())
+    return shifts
   }
 
   setView(view: string, payload: any, action: string) {
@@ -96,7 +113,7 @@ export class ShiftComponent implements OnInit {
     }
 
     // validation startTime should be lower than endTime
-    if (payload.startTime < payload.endTime) {
+    if (payload.startTime > payload.endTime) {
       Swal.fire({
         icon: 'error',
         text: `Start time should be lower than end time!`,
@@ -118,7 +135,7 @@ export class ShiftComponent implements OnInit {
       endTime: this.formData.endTime,
     }
 
-    // validation startTime should be lower than endTime
+    // validation: startTime should be lower than endTime
     if (payload.startTime > payload.endTime) {
       Swal.fire({
         icon: 'error',
@@ -129,7 +146,7 @@ export class ShiftComponent implements OnInit {
 
     // update and get the latest shifts
     await Services.updateShift(payload, this.formData.id)
-    
+
     this.getShift()
   }
 
@@ -159,9 +176,10 @@ export class ShiftComponent implements OnInit {
     this.getShift()
   }
 
+  // get all shift (deprecated, now using get shift per week)
   async getShift() {
-    this.shifts = await Services.getShift()
-    console.log(this.shifts);
+    // this.shifts = await Services.getShift()
+    this.shifts = await this.filterByWeek()
   }
 
 
