@@ -104,7 +104,6 @@ export class ShiftComponent implements OnInit {
   }
 
   async create() {
-    console.log(this.formData);
     const payload = {
       name: this.formData.name,
       dateShift: new Date(this.formData.date),
@@ -121,13 +120,21 @@ export class ShiftComponent implements OnInit {
       return
     }
 
+    // validation not null
+    if (!payload.name || !payload.dateShift || !payload.startTime || !payload.endTime) {
+      Swal.fire({
+        icon: 'error',
+        text: `Please fill all input!`,
+      })
+      return
+    }
+
     // create and get the latest shifts
     await Services.createShift(payload)
     this.getShift()
   }
 
   async update() {
-    console.log(this.formData);
     const payload = {
       name: this.formData.name,
       dateShift: new Date(this.formData.date),
@@ -140,6 +147,15 @@ export class ShiftComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         text: `Start time should be lower than end time!`,
+      })
+      return
+    }
+
+    // validation not null
+    if (!payload.name || !payload.dateShift || !payload.startTime || !payload.endTime) {
+      Swal.fire({
+        icon: 'error',
+        text: `Please fill all input!`,
       })
       return
     }
