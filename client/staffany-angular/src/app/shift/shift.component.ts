@@ -31,6 +31,7 @@ export class ShiftComponent implements OnInit {
       dateShift: new Date(2021, 8, 14),
       startTime: "07:00",
       endTime: "13:00",
+      isPublished: true
     },
     {
       id: 2,

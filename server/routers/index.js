@@ -14,7 +14,7 @@ router.get('/shift/filter/:start/:end', shiftController.getFiltered)
 router.post('/shift', shiftController.create)
 router.put('/shift/:id', shiftController.update)
 router.delete('/shift/:id', shiftController.delete)
-router.put('/shift/publish/all/:action', shiftController.publishAll)
+router.put('/shift/publish/all/:action/:week', shiftController.publishAll)
 router.put('/shift/publish/:id', shiftController.publish)
 router.put('/shift/unpublish/:id', shiftController.unpublish)
 

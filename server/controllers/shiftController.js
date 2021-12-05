@@ -90,8 +90,6 @@ class Controller {
       payload.isPublished = false
       payload.UserId = 1
 
-      console.log(payload.startTimestamp, payload.endTimestamp);
-
       // check if clashed
       const data = await Shift.findAll({})
       for (let i = 0; i < data.length; i++) {
@@ -129,6 +127,7 @@ class Controller {
   static async publishAll(req, res, next) {
     try {
       const action = req.params.action
+      let week = new Date(req.params.week)
       const command = (action == 'publish') ? true : false
 
       await Shift.update({ isPublished: command },
